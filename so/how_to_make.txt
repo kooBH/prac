@@ -1,0 +1,46 @@
+ shared library you need first to compile your C code with the -fPIC (position independent code) flag.
+
+gcc -c -fPIC hello.c -o hello.o
+
+This will generate an object file (.o), now you take it and create the .so file:
+
+gcc hello.o -shared -o libhello.so
+
+EDIT: Suggestions from the comments:
+
+You can use
+
+gcc -shared -o libhello.so -fPIC hello.c
+
+to do it in one step. – Jonathan Leffler
+
+I also suggest to add -Wall to get all warnings, and -g to get debugging information, to your gcc commands. – Basile Starynkevitch
+
+1. 정적 라이브러리(또는 Archive)
+
+정적라이브러리(또는 Archive)파일이라 불리우고 .a의 확장자를 가진다. 여러개의 오브젝트 파일들을 하나로 묶어 사용하기 때문에 Archive파일이라고 부른며 컴파일 시간에 코드를 포함하여 결정하기 때문에 정적 라이브러리라고 부른다. 위의 파일을 오브젝트 파일로 컴파일 한다.
+# gcc -c test.c
+# gcc -c app.c
+
+test.o 파일과 app.o 파일이 생기는데 test.o 파일을 Archive로 묶어 보자. 라이브러리 파일의 작명법은 lib뒤에 이름을 붙이는 것이다.
+# ar cr libtest.a test.o
+
+libtest.a 파일이 생성되었을 것이며 이 라이브러리를 사용하여 컴파일 할려면 아래와 같이 한다. -L은 라이브러리 파일의 위치를 지정하며 -ltest가 libtest.a를 지정하게 된다.
+#gcc -o  app app.o -L. -ltest
+
+2. 동적 라이브러리
+
+실 행 시간에 라이브러리 파일을 찾아 코드를 포함하기 때문에 동적라이브러리라고 부른다. 즉, 정적 라이브러리는 컴파일 시간에 코드를 결정하기 때문에 소스가 변경되면 새로 컴파일 해야하지만, 동적 라이브러리의 경우 라이브러리만 교체하는 것으로도 변경이 가능하다.
+# gcc -c -fPIC test.c
+# gcc -c app.c
+
+-fPIC옵션은 Position-Independent Code의 약자이며 test.o파일을 동적라이브러리로 사용하도록 컴파일 하는 옵션이다. 이렇게 컴파일된 오브젝트 파일을 .so파일로 묶으면 된다.
+# gcc -shared -fPIC -o libtest.so test.o
+
+컴파일은 아래와 같이 하면 된다.
+# gcc -o app app.o -L. -ltest
+
+만 일 libtest.a 파일과 libtest.so 파일이 같이 있을 경우 gcc 컴파일러는 libtest.so 파일을 먼저 지정하게 된다. 만일 libtest.a를 사용하여 컴파일 하고 싶으면 아래와 같이 실행하면 된다.
+# gcc -static -o app app.o -L. -ltest
+
+출처: http://blueamor.tistory.com/707 [51%의 가능성]
