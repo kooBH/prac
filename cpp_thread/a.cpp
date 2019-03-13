@@ -29,13 +29,26 @@ class obj_2{
   public:
     obj_2(int _id){
       id = _id;
+      cout<<id<<" created.\n";
+      run = true;
     }
-    void tell() const{
+    void tell() {
+      while(run){
       cout<<id<<endl;
       this_thread::sleep_for(chrono::seconds(id));
-      cout<<id<<endl;
+      if(!run){
+        cout<<"Bye\n";
+        run=false;
+        }
+      }
+    }
+
+    void call(){
+      cout<<"call : "<<id<<endl;
+      run = false;
     }
   private:
+    bool run;
     int id;
 
 };
@@ -45,17 +58,25 @@ int main(){
 
   string a;
 
-  thread t1{obj_1(1)}; 
-  thread t2{obj_1(2)}; 
-  obj_2 o3(3),o4(4);
-  thread t3{&obj_2::tell,&o3}; 
-  thread t4{&obj_2::tell,&o4}; 
+  obj_2 o1(1),o2(2);
+  thread t1{&obj_2::tell,&o1}; 
+  thread t2{&obj_2::tell,&o2}; 
+
+  while(true){
+    cin>>a;
+    if(a.compare("w")==0){
+      o1.call();
+    }
+    if(a.compare("e")==0)
+      o2.call();
+  
+    if(a.compare("q")==0)
+      break;
+  }
 
 
   t1.join();
   t2.join();
-  t3.join();
-  t4.join();
 
     return 0;
 }
