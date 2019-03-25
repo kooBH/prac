@@ -7,10 +7,10 @@ int main(int argc,char*argv[]){
   Py_Initialize();
   PyRun_SimpleString("import os\n"
       "import sys\n"
-      "sys.path.append(os.getcwd())\n"
+      "sys.path.append(os.getcwd()+'/..')\n"
       "print(os.getcwd())\n"
       );
-  PyRun_SimpleString("from hi import *\n"
+  PyRun_SimpleString("from module import *\n"
        "hello()\n"
                       );
 
@@ -18,6 +18,13 @@ int main(int argc,char*argv[]){
       "print('value is 17')\n"
       );
   printf("Gonna print value\n");
+  PyRun_SimpleString("print(value)\n");
+  Py_Finalize();
+
+  printf("Restart\n");
+
+  Py_Initialize();
+  PyRun_SimpleString("value = 17\n");
   PyRun_SimpleString("print(value)\n");
   Py_Finalize();
   printf("END\n");
