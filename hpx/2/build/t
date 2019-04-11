@@ -1,0 +1,7 @@
+terminate t}: the runtime system is not active (did you already call finalize?): HPX(invalid_status)
+
+terminate called after throwing an instance of 'hpx::detail::exception_with_info<hpx::exception>'
+  what():  the runtime system is not active (did you already call finalize?): HPX(invalid_status)called after throwing an instance of 'hpx::detail::exception_with_info<hpx::exception>'
+  what():  Can only suspend runtime from running state: HPX(invalid_status)
+
+
