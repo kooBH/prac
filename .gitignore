@@ -31,5 +31,15 @@
 *.out
 *.app
 
+# Build
 */build/
 build
+
+# CMake
+*/CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+
+# temp
+*.swp
+
