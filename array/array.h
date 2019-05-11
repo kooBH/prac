@@ -43,7 +43,7 @@ template <typename T, size_t Dims> class array_view {
 
 public:
   array_view(const size_t *shape, T *begin) : m_shape(shape), m_begin(begin) {
-    printf("array_view constructor\n");
+//    printf("array_view constructor\n");
   }
 
   size_t shape(size_t idx) {
@@ -55,7 +55,7 @@ public:
   }
 
   array_view<T, Dims - 1> operator[](size_t idx) {
-    printf("array_vew 1 [%lu]\n",idx);
+  //  printf("array_vew 1 [%lu]\n",idx);
     return array_view<T, Dims - 1>(m_shape + 1, m_begin + m_shape[1] * idx);
   }
 
@@ -82,7 +82,7 @@ public:
   size_t shape(size_t) { return m_size; }
 
   T &operator[](size_t idx) { 
-    printf("array_view <1> [%lu]\n",idx);
+   // printf("array_view <1> [%lu]\n",idx);
     return m_begin[idx];
   }
 
@@ -176,11 +176,11 @@ public:
   }
 
   array_view<T, Dims - 1> operator[](size_t idx) {
-    printf("call array_view 1 [%lu]\n",idx);
+  //  printf("call array_view 1 [%lu]\n",idx);
     return array_view<T, Dims - 1>(m_shape + 1, m_data + m_shape[1] * idx);
   }
   array_view<const T, Dims - 1> operator[](size_t idx) const {
-    printf("call array_view 2\n");
+  //  printf("call array_view 2\n");
     return array_view<const T, Dims - 1>(m_shape + 1,
                                          m_data + m_shape[1] * idx);
   }
