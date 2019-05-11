@@ -5,14 +5,8 @@
 
 
 template <class T>
-class union_array{
+class arr{
   private:
-    union p{
-      T* d1;
-      T**d2;
-      T***d3;
-      T****d4;
-    };
     int dim;
     size_t size;
     T* data;
@@ -61,7 +55,7 @@ int main(){
   d3[0][1][2][3]=1;
 
   /* mine*/
-  union_array<long>my_d{1,2,3,4};
+  arr<long>my_d{1,2,3,4};
 
   /* native */
   long****c;
@@ -134,35 +128,6 @@ int main(){
      start = std::chrono::high_resolution_clock::now();
       for(int j=0;j<n1;j++)
           for(long i =0; i<n2;i++)
-            c2[0][1]=i;
-      elapsed = std::chrono::high_resolution_clock::now() - start;
-      microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-      std::cout<<"| "<<microseconds<<"("<<(double)microseconds/1000000<<")\n";
-  }
-
-  std::cout<<"\n";
-
-
-  std::cout<<"### 2D Mul const\n\n";
-
-  std::cout<<"n1|simd_array|native_array\n";
-  std::cout<<"---|---|---\n";
-  for(int k=0;k<6;k++){
-      long n2 = n2Array[k];
-
-      std::cout<<n1;
-      std::cout<<"|"<<n2;
-
-      auto start = std::chrono::high_resolution_clock::now();
-      for(int j=0;j<n1;j++){
-            d2[0][1]=i;
-      }
-      auto elapsed = std::chrono::high_resolution_clock::now() - start;
-      long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-      std::cout<<"| "<<microseconds<<"("<<(double)microseconds/1000000<<")";
-      
-     start = std::chrono::high_resolution_clock::now();
-      for(int j=0;j<n1;j++)
             c2[0][1]=i;
       elapsed = std::chrono::high_resolution_clock::now() - start;
       microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
