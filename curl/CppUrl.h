@@ -27,8 +27,7 @@ class CppUrl{
       return size * nmemb;
     }
 
-    static size_t write_file(void *ptr, size_t size, size_t nmemb, void *stream)
-    {
+    static size_t write_file(void *ptr, size_t size, size_t nmemb, void *stream){
       size_t written = fwrite(ptr, size, nmemb, (FILE *)stream);
       return written;
     }
@@ -39,7 +38,6 @@ class CppUrl{
      port(_port){
        std::cout<<_url<<"\n";
        std::cout<<_port<<"\n";
-      
     }
     ~CppUrl(){}
 
