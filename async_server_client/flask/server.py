@@ -71,4 +71,4 @@ if __name__ == '__main__':
 
    # 모든 ip (외부 ip) 에서 접근 가능하도록 설정.
    #app.run(host='0.0.0.0',port = 1170)
-   app.run(port = 8080)
+   app.run(port = 8080,threaded=True)

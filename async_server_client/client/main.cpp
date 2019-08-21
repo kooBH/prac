@@ -15,6 +15,10 @@ using std::atomic;
 using std::queue;
 using std::mutex;
 
+#define _URL "163.239.192.87:1170/async"
+
+
+
 static size_t write_callback(void *ptr, size_t size, size_t nmemb, std::string* data) {
   data->assign((char*) ptr, size * nmemb);
   return size * nmemb;
@@ -60,8 +64,8 @@ class Processor{
   private:
    int max_idx; 
    int cur_idx;
-   MutexQueue<int> q;
-   int cur_v;
+   MutexQueue<std::string> q;
+   std::string cur_v;
 
   public:
 
@@ -71,10 +75,10 @@ class Processor{
    }
 
    void Push(std::string input){
-    q.push(stoi(input));
+    q.push(input);
     cur_idx+=1;
    }
-   int Pop(){
+   std::string Pop(){
      return  q.pop();
    }
 
@@ -90,6 +94,7 @@ class Processor{
    }
 };
 
+
 int main(){
   std::string output;
   int max_idx;
@@ -97,18 +102,10 @@ int main(){
   CURL *curl;
   CURLcode res;
 
-  curl = curl_easy_init();
-  curl_easy_setopt(curl, CURLOPT_URL, "localhost:8080");
-  curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-  curl_easy_setopt(curl, CURLOPT_WRITEDATA,     &output);
-  res = curl_easy_perform(curl);
-  curl_easy_cleanup(curl);
-  std::cout<<output<<"\n";
-
   //Request Process
  
   curl = curl_easy_init();
-  curl_easy_setopt(curl, CURLOPT_URL,"localhost:8080/async");
+  curl_easy_setopt(curl, CURLOPT_URL,_URL);
   curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "request=process");
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
   curl_easy_setopt(curl, CURLOPT_WRITEDATA,     &output);
@@ -129,7 +126,7 @@ int main(){
 //    std::cout<<"i : "<<i<<"\n";
     //Get first result and do some stuff
     curl = curl_easy_init();
-    curl_easy_setopt(curl, CURLOPT_URL,"localhost:8080/async");
+    curl_easy_setopt(curl, CURLOPT_URL,_URL);
     std::string postfiled = "request=get&idx=";
     postfiled = postfiled + std::to_string(i);
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postfiled.c_str());

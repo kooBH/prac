@@ -14,7 +14,7 @@ list(APPEND SRC
     lib/curl/curlver.h
     )
 # Curl Warpper
-list(APPEND SRC 
+list(APPEND HEAD
   CppUrl.h 
   )
 
