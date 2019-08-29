@@ -44,3 +44,7 @@ cmake_install.cmake
 *.swp
 
 CMakeFiles
+
+# Eigen 
+eigen/eigen
+*.b
