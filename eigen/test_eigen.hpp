@@ -19,7 +19,6 @@ using std::complex;
 using std::vector;
 
 #include <chrono> 
-
 #include <stdio.h>
 
 // https://eigen.tuxfamily.org/dox/classEigen_1_1ComplexEigenSolver.html
@@ -41,7 +40,7 @@ void test_eigen()
 
   for(int i : size){
     file_input = "../data/A_" + std::to_string(i) + ".b";
-    cout<<"open " << file_input<<endl;
+    cout<<"open " << file_input<<" | ";
     input = fopen(file_input.c_str(),"rb");
     if(!input)
       exit(-1);
@@ -59,6 +58,13 @@ void test_eigen()
       }
     
     }
+
+
+    if(i == 6){
+      std::cout<<"\n";
+      std::cout<<A<<std::endl;
+    }
+
 //    cout << " A " << endl << A << endl << endl;
     ComplexEigenSolver<MatrixXcd> ces;
     ces.compute(A);
@@ -72,6 +78,12 @@ void test_eigen()
     auto finish= std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = finish - start;
     std::cout << "Elapsed time: " << elapsed.count()/1000 << " s\n";
+
+    if(i == 6){
+      std::cout<<"======================"<<std::endl;
+      //std::cout<<A<<std::endl;
+      std::cout<<ces.eigenvectors()<<std::endl;
+    }
 
     /*
     complex<double> lambda = ces.eigenvalues()[0];

@@ -48,3 +48,9 @@ CMakeFiles
 # Eigen 
 eigen/eigen
 *.b
+
+# PLASMA
+eigen/plasma-*
+
+# openblas
+eigen/openblas
