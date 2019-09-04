@@ -8,5 +8,6 @@ int main(){
   test_plasma();
   test_zheev();
   test_zheevd();
+//  test_zheevd_2stage();
   return 0;
 }

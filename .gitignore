@@ -45,6 +45,8 @@ cmake_install.cmake
 
 CMakeFiles
 
+
+### EIGEN PRAC
 # Eigen 
 eigen/eigen
 *.b
@@ -54,3 +56,7 @@ eigen/plasma-*
 
 # openblas
 eigen/openblas
+
+# BLAZE
+eigen/blaze-3.6
+
