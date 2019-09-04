@@ -6,6 +6,7 @@ int main(){
 
   test_eigen();
   test_plasma();
-  test_lapack();
+  test_zheev();
+  test_zheevd();
   return 0;
 }

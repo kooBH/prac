@@ -10,6 +10,7 @@ set(INCL)
 list(APPEND SRC
   test_eigen.hpp
   test_plasma.hpp
+  eigen_solver.hpp
   test_lapack.hpp
   main.cpp
   )
