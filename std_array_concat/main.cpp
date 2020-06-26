@@ -22,7 +22,6 @@ auto concat(const std::array<T, N>& ar1, const std::array<T, M>& ar2)
 
 int main(){
 
-
   std::array<char,3> a = {'a','b','c'};
   std::array<char,4> b = {'d','e','f'};
 
@@ -33,7 +32,6 @@ int main(){
   auto c= concat<char, a.size(), b.size()>(a, b);
 
   print_array<char,c.size()>(c);
-
 }
 
 
