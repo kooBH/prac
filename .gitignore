@@ -45,6 +45,9 @@ cmake_install.cmake
 
 CMakeFiles
 
+# data
+*.json
+*.wav
 
 ### EIGEN PRAC
 # Eigen 
@@ -59,4 +62,7 @@ eigen/openblas
 
 # BLAZE
 eigen/blaze-3.6
+
+# jupyter notebook
+.ipynb_checkpoints
 

@@ -1,0 +1,1 @@
+Load json file about utterance itervals. and Cut wav files into each utterances.
