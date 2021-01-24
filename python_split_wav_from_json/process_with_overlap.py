@@ -18,7 +18,7 @@ def split(root,target,info) :
         stop_idx = int(stop*sr)
         #print(str(start_idx)+' ~ ' + str(stop_idx))
         tmp = data[start_idx:stop_idx][:];
-        sf.write(root+'/'+'nurse'+'/'+target+'_nurse_'+str(cnt)+'.wav',tmp,sr)
+        sf.write(root+'/'+'nurse_with_overlap'+'/'+target+'_nurse_'+str(cnt)+'.wav',tmp,sr)
         cnt+=1
     cnt = 0  
     for i in info['patient'] :
@@ -30,7 +30,7 @@ def split(root,target,info) :
         stop_idx = int(stop*sr)
         tmp = data[start_idx:stop_idx][:];
         #print(str(start_idx)+' ~ ' + str(stop_idx))
-        sf.write(root+'/'+'patient'+'/'+target+'_patient_'+str(cnt)+'.wav',tmp,sr)
+        sf.write(root+'/'+'patient_with_overlap'+'/'+target+'_patient_'+str(cnt)+'.wav',tmp,sr)
         cnt+=1
         
 if __name__=='__main__':
@@ -38,10 +38,18 @@ if __name__=='__main__':
         j = json.load(file_json)
     root = input_root
     cnt = 0
+   
+    log = open('log.txt','w')
+   
+    
     for i in tqdm(j) :
         tmp = root +'/raw/'+ i + '.wav' 
         tmp2 = os.path.isfile(tmp)
         if tmp2 :
             split(input_root,i,j[i])
             cnt +=1
-    print("files : " + str(cnt)+'/'+ str(len(j)))
+        else :
+            log.write(tmp)
+    str_summary = "files : " + str(cnt)+'/'+ str(len(j))         
+    print(str_summary)
+    log.write(str_summary)
