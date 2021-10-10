@@ -7,6 +7,8 @@ set(INCL)
 set(LINKLIBS)
 set(COMPILE_OPTION)
 
+include(lib/RtAudioWrapper/RtAudio.cmake)
+
 list(APPEND SRC
 	cleanup.h
 	common.h
@@ -15,6 +17,7 @@ list(APPEND SRC
 	loopback-capture.cpp
 	prefs.h
 	prefs.cpp
+	functiondiscoverykeys_devpkey.h
 	
 	test.cpp
   )
@@ -22,10 +25,18 @@ list(APPEND INCL
   ${CMAKE_CURRENT_LIST_DIR}/.
   )
 list(APPEND LINKLIBS
+	avrt.lib
+	ole32.lib
+	winmm.lib
+	odbc32.lib
+	odbccp32.lib
+	dsound.lib
   )
 if(MSVC)
   list(APPEND COMPILE_OPTION
-    )
+	/D"UNICODE"
+	/D"_UNICODE"
+	 )
 else()
   list(APPEND COMPILE_OPTION
     )

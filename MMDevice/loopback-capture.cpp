@@ -168,6 +168,7 @@ HRESULT LoopbackCapture(
     
     // register with MMCSS
     DWORD nTaskIndex = 0;
+    //HANDLE hTask = AvSetMmThreadCharacteristics(L"Audio", &nTaskIndex);
     HANDLE hTask = AvSetMmThreadCharacteristics(L"Audio", &nTaskIndex);
     if (NULL == hTask) {
         DWORD dwErr = GetLastError();

@@ -124,12 +124,13 @@ CPrefs::CPrefs(int argc, LPCWSTR argv[], HRESULT &hr)
             if (NULL == m_szFilename) {
                 m_szFilename = DEFAULT_FILE;
             }
-
+            /* omit : variable size mismatch error in x64
             // open file
             hr = open_file(m_szFilename, &m_hFile);
             if (FAILED(hr)) {
                 return;
             }
+            */
     }
 }
 
@@ -343,6 +344,7 @@ HRESULT get_specific_device(LPCWSTR szLongName, IMMDevice **ppMMDevice) {
     return S_OK;
 }
 
+/*
 HRESULT open_file(LPCWSTR szFileName, HMMIO *phFile) {
     MMIOINFO mi = {0};
 
@@ -361,3 +363,5 @@ HRESULT open_file(LPCWSTR szFileName, HMMIO *phFile) {
 
     return S_OK;
 }
+
+*/

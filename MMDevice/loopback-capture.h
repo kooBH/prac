@@ -19,6 +19,7 @@ struct LoopbackCaptureThreadFunctionArguments {
 
 DWORD WINAPI LoopbackCaptureThreadFunction(LPVOID pContext);
 
+
 extern BYTE* pData, *pDataBackup;
 extern bool isSpeakerFrameOver;
 extern LONG lBytesWritten;

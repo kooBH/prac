@@ -9,7 +9,7 @@
 #include <functiondiscoverykeys_devpkey.h>
 
 #include "log.h"
-#include "cleanup.h"
 #include "prefs.h"
 #include "loopback-capture.h"
+#include "cleanup.h"
 #include <stdio.h>
