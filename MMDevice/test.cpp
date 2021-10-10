@@ -18,6 +18,10 @@ unsigned long ulSpeakerFrameCounter = 0;
 unsigned long ulSpeakerSavedIndex = 0, ulSpeakerProcessedIndex = 0;
 BufferController FarendBuffer, InputBuffer;
 
+#define SAFE_RELEASE(punk)  \
+              if ((punk) != NULL)  \
+                { (punk)->Release(); (punk) = NULL; }
+
 int main(int argc, char *argv[]) {
 
 
@@ -61,6 +65,9 @@ int main(int argc, char *argv[]) {
   }
   CloseHandleOnExit closeStopEvent(hStopEvent);
 
+
+
+
   // create arguments for loopback capture thread
   LoopbackCaptureThreadFunctionArguments threadArgs;
   threadArgs.hr = E_UNEXPECTED; // thread will overwrite this
@@ -70,5 +77,63 @@ int main(int argc, char *argv[]) {
   threadArgs.hStartedEvent = hStartedEvent;
   threadArgs.hStopEvent = hStopEvent;
   threadArgs.nFrames = 0;
+
+
+  /* Start Endpoint Device Enumeration */
+  unsigned int count;
+  IMMDeviceEnumerator* pEnumerator = NULL;
+  IMMDeviceCollection* pCollection = NULL;
+  IMMDevice* pEndpoint = NULL;
+  IPropertyStore* pProps = NULL;
+  LPWSTR pwszID = NULL;
+
+  const CLSID CLSID_MMDeviceEnumerator = __uuidof(MMDeviceEnumerator);
+  const IID IID_IMMDeviceEnumerator = __uuidof(IMMDeviceEnumerator);
+
+
+  hr = CoCreateInstance(
+    CLSID_MMDeviceEnumerator, NULL,
+    CLSCTX_ALL, IID_IMMDeviceEnumerator,
+    (void**)&pEnumerator);
+
+  hr = pEnumerator->EnumAudioEndpoints(
+    eCapture, DEVICE_STATE_ACTIVE,
+    &pCollection);
+  hr = pEnumerator->EnumAudioEndpoints(
+    eRender, DEVICE_STATE_ACTIVE,
+    &pCollection);
+
+  hr = pCollection->GetCount(&count);
+  printf("count : %u\n", count);
+  for (ULONG i = 0; i < count; i++)
+  {
+    // Get pointer to endpoint number i.
+    hr = pCollection->Item(i, &pEndpoint);
+
+    // Get the endpoint ID string.
+    hr = pEndpoint->GetId(&pwszID);
+
+    hr = pEndpoint->OpenPropertyStore(
+      STGM_READ, &pProps);
+
+    PROPVARIANT varName;
+    // Initialize container for property value.
+    PropVariantInit(&varName);
+
+    // Get the endpoint's friendly-name property.
+    hr = pProps->GetValue(PKEY_Device_FriendlyName, &varName);
+
+    // Print endpoint friendly name and endpoint ID.
+    printf("Endpoint %d: \"%S\" (%S)\n",
+      i, varName.pwszVal, pwszID);
+
+    CoTaskMemFree(pwszID);
+    pwszID = NULL;
+    PropVariantClear(&varName);
+    SAFE_RELEASE(pProps)
+      SAFE_RELEASE(pEndpoint)
+  }
+
+  /* End */
   return 0;
 }
