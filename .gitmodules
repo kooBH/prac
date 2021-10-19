@@ -1,0 +1,3 @@
+[submodule "MMDevice/lib/RtAudioWrapper"]
+	path = MMDevice/lib/RtAudioWrapper
+	url = https://github.com/koobh/RtAudioWrapper
