@@ -54,9 +54,21 @@ size_t getSizeByDim(const nvinfer1::Dims& dims)
 void parseOnnxModel(const std::string& model_path, TRTUniquePtr<nvinfer1::ICudaEngine>& engine,
   TRTUniquePtr<nvinfer1::IExecutionContext>& context)
 {
+  /* https://github.com/onnx/onnx-tensorrt/issues/266 
+   "ONNX parser only supports networks with an explicit batch dimension"
+   =>
+  #crouchggj : 
+  using following steps to create INetworkDefinition instance works for me:
+  (1) const auto explicitBatch = 1U << static_cast<uint32_t>(nvinfer1::NetworkDefinitionCreationFlag::kEXPLICIT_BATCH);
+  (2) auto network = GhUniquePtr(builder->createNetworkV2(explicitBatch));
+   */
+  const auto explicitBatch = 1U << static_cast<uint32_t>(nvinfer1::NetworkDefinitionCreationFlag::kEXPLICIT_BATCH);
+
   TRTUniquePtr<nvinfer1::IBuilder> builder{ nvinfer1::createInferBuilder(gLogger) };
+
   //TRTUniquePtr<nvinfer1::INetworkDefinition> network{ builder->createNetwork() };
-  TRTUniquePtr<nvinfer1::INetworkDefinition> network{ builder->createNetworkV2(0) };
+  TRTUniquePtr<nvinfer1::INetworkDefinition> network{ builder->createNetworkV2(explicitBatch) };
+
   TRTUniquePtr<nvonnxparser::IParser> parser{ nvonnxparser::createParser(*network, gLogger) };
   TRTUniquePtr<nvinfer1::IBuilderConfig> config{ builder->createBuilderConfig() };
   // parse ONNX
@@ -118,9 +130,19 @@ int main() {
     return -1;
   }
 
-
   // inference
- // context->enqueue(batch_size, buffers.data(), 0, nullptr);
+  context->enqueue(batch_size, buffers.data(), 0, nullptr);
+
+
+  //void postprocessResults(float *gpu_output, const nvinfer1::Dims &dims, int batch_size)
+  // copy results from GPU to CPU
+  std::vector<float> cpu_output(getSizeByDim(output_dims[0]) * batch_size);
+  cudaMemcpy(cpu_output.data(), (float*)buffers[1], cpu_output.size() * sizeof(float), cudaMemcpyDeviceToHost);
+
+  std::cout << "output : "<<std::endl;
+  std::cout << cpu_output[0]<<std::endl;
+  std::cout << cpu_output[1]<<std::endl;
+  std::cout << cpu_output[2]<<std::endl;
 
   // free
   for (void* buf : buffers)
