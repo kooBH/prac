@@ -66,3 +66,5 @@ eigen/blaze-3.6
 # jupyter notebook
 .ipynb_checkpoints
 
+# data
+*.txt
