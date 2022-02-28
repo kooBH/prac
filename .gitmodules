@@ -1,3 +1,6 @@
 [submodule "MMDevice/lib/RtAudioWrapper"]
 	path = MMDevice/lib/RtAudioWrapper
 	url = https://github.com/koobh/RtAudioWrapper
+[submodule "bytesep"]
+	path = bytesep
+	url = https://github.com/bytedance/music_source_separation.git
