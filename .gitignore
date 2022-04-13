@@ -68,3 +68,4 @@ eigen/blaze-3.6
 
 # data
 *.txt
+*.mat
