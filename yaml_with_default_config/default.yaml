@@ -1,0 +1,7 @@
+a :
+  key : 'defaukt'
+  val : 0
+---
+b :
+  key : 'b'
+  val : 2

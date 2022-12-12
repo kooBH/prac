@@ -39,7 +39,6 @@ def process(idx):
     x = x/np.max(np.abs(x))
     
     # process
-
     y = librosa.effects.split(x,top_db=30)
 
     cnt = 0
@@ -52,10 +51,19 @@ def process(idx):
         cnt += 1
         data = x[y[i,0]:y[i,1]]
         data = data/np.max(np.abs(data))
+        print('----')
+        print(data.shape)
+        data = np.pad(data,(0,16000*3))
+        print(data.shape)
         sf.write(os.path.join(output_root,str(idx)+'_'+str(cnt)+'.wav'),data,16000)
 
 if __name__=='__main__': 
     cpu_num = cpu_count()
+
+    os.makedirs(output_root,exist_ok=True)
+
+    process(0)
+    exit()
 
     # categories 
     arr = list(range(len(target_list)))
