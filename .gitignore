@@ -72,3 +72,5 @@ eigen/blaze-3.6
 
 *.bin
 *.pkl
+
+*.mp4
