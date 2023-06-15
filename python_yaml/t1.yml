@@ -1,2 +1,25 @@
 param1:
     a1: [2, 3, 4]
+---    
+arch : {
+    "encoder": {
+        "enc1": {"in_channels": 4, "out_channels": 64, "kernel_size": [1, 5], "stride": [1,2], "padding": [0,2]},
+        "enc2": {"in_channels": 64, "out_channels": 64, "kernel_size": [1, 7], "stride": [1,7], "padding": [0,1], "groups": 64},
+        "enc3": {"in_channels": 64, "out_channels": 64, "kernel_size": [1, 7], "stride": [1,7], "padding": [0,2], "groups":64},
+        "enc4": {"in_channels": 64, "out_channels": 64, "kernel_size": [1, 7], "stride": [1,7], "padding": [0,1], "groups": 64},
+        "enc5": {"in_channels": 64, "out_channels": 64, "kernel_size": [1, 7], "stride": [1,7], "padding": [0,2], "groups": 64},
+        "enc6": {"in_channels": 64, "out_channels": 64, "kernel_size": [1, 7], "stride": [1,7], "padding": [0,1], "groups": 32}
+    },
+    "decoder": {
+        "dec6": {"in_channels": 128, "out_channels": 64, "kernel_size": [1, 3], "stride": [1, 2], "padding": [0, 1]},
+        "dec5": {"in_channels": 128, "out_channels": 64, "kernel_size": [1, 7], "stride": [1, 7], "padding": [0, 2]},
+        "dec4": {"in_channels": 128, "out_channels": 64, "kernel_size": [1, 7], "stride": [1, 7], "padding": [0, 1]},
+        "dec3": {"in_channels": 128, "out_channels": 64, "kernel_size": [1, 7], "stride": [1, 7], "padding": [0, 2]},
+        "dec2": {"in_channels": 128, "out_channels": 64, "kernel_size": [1, 7], "stride": [1, 7], "padding": [0, 1]},
+        "dec1": {"in_channels": 128, "out_channels": 4, "kernel_size": [1, 7], "stride": [1, 7], "padding": [0, 2]}
+    },
+    "FGRU": {"in_channels": 64, "hidden_size": 64, "out_channels": 64},
+    "FSA": {"in_channels": 64, "hidden_size": 64, "out_channels": 64},
+    "TGRU": {"in_channels": 64, "hidden_size": 64, "out_channels": 64, "state_size": 17},
+    "MEA": {"in_channels": 4, "mag_f_dim": 3}
+}

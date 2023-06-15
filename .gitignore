@@ -74,3 +74,5 @@ eigen/blaze-3.6
 *.pkl
 
 *.mp4
+
+*.pyc
