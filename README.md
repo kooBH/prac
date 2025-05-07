@@ -24,5 +24,12 @@ ipd.display(ipd.Audio(x, rate=sr))
 
 plt.figure()
 plt.plot(x)
-plt.title("x")
+plt.plot(y)
+plt.title("Wav Plot")
+plt.legend(["x","y"])
+
+plt.figure()
+plt.title("Specrogram")
+plt.pcolormesh(torch.abs(Y).T, shading='flat') 
+
 ```
